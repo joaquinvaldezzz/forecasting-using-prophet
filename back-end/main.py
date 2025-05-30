@@ -1,16 +1,14 @@
-# This is a sample Python script.
+from flask import Flask
+from flask_cors import CORS
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+app = Flask(__name__)
+CORS(app)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+@app.route("/")
+def hello():
+    return "Hello!"
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+if __name__ == "__main__":
+    app.run(debug=True)
