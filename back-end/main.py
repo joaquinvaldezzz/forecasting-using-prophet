@@ -10,6 +10,9 @@ CORS(app)
 
 # Mock data for demonstration - replace it with an actual data source
 def generate_mock_data():
+    """
+    Generate mock data for demonstration purposes.
+    """
     dates = pd.date_range(start='2018-01-01', end='2025-12-31', freq='ME')
     data = {
         'ds': dates,
@@ -26,6 +29,9 @@ commodities = ['rice', 'vegetables', 'meat']
 
 
 def train_models():
+    """
+    Train models for each commodity.
+    """
     df = generate_mock_data()
     for commodity in commodities:
         model = Prophet(
@@ -45,6 +51,7 @@ def train_models():
 # Train models on startup
 train_models()
 
+
 @app.route("/")
 def index():
     return 'Hello!'
@@ -52,6 +59,9 @@ def index():
 
 @app.route("/api/forecast", methods=['GET'])
 def get_forecast():
+    """
+    Get forecast data for a given commodity.
+    """
     commodity = request.args.get('commodity', 'rice')
     if commodity not in commodities:
         return jsonify({'error': 'Invalid commodity'}), 400
@@ -83,11 +93,17 @@ def get_forecast():
 
 @app.route("/api/commodities", methods=['GET'])
 def get_commodities():
+    """
+    Get all commodities.
+    """
     return jsonify(commodities)
 
 
 @app.route("/api/insights", methods=['GET'])
 def get_insights():
+    """
+    Get insights for all commodities.
+    """
     df = generate_mock_data()
     insights = []
 
