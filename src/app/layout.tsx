@@ -16,10 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-w-80 antialiased">
-        <Navigation />
-        {children}
-      </body>
+      <body className="min-w-80 antialiased">{children}</body>
     </html>
   );
 }

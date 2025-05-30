@@ -46,40 +46,12 @@ const data = {
           isActive: true,
         },
         {
-          title: "Transactions",
-          url: "#",
-          icon: RiLeafLine,
+          title: "Forecasting Tools",
+          url: "/forecasting",
+          icon: RiSlowDownLine,
+          isActive: false,
         },
-        {
-          title: "Metrics",
-          url: "#",
-          icon: RiNavigationLine,
-        },
-        {
-          title: "Security",
-          url: "#",
-          icon: RiSpeakLine,
-        },
-        {
-          title: "API",
-          url: "#",
-          icon: RiCodeSSlashLine,
-        },
-        {
-          title: "Quick Setup",
-          url: "#",
-          icon: RiGeminiLine,
-        },
-        {
-          title: "Payment Links",
-          url: "#",
-          icon: RiLinksLine,
-        },
-        {
-          title: "Archive",
-          url: "#",
-          icon: RiDatabase2Line,
-        },
+        { title: "AI Assistant", url: "/ai", icon: RiSlowDownLine, isActive: false },
       ],
     },
   ],
@@ -156,9 +128,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroup>
         ))}
       </SidebarContent>
-      <SidebarFooter>
+      {/* <SidebarFooter>
         <NavUser user={data.user} />
-      </SidebarFooter>
+      </SidebarFooter> */}
     </Sidebar>
   );
 }

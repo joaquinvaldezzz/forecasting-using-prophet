@@ -1,6 +1,6 @@
 "use client";
 
-import { RiAddLine, RiExpandRightLine } from "@remixicon/react";
+import { RiExpandRightLine } from "@remixicon/react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
@@ -27,19 +27,6 @@ export function ActionButtons() {
           </TooltipTrigger>
           <TooltipContent className="lg:hidden" hidden={isMobile}>
             Export
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-      <TooltipProvider delayDuration={0}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button className="aspect-square max-lg:p-0">
-              <RiAddLine className="size-5 opacity-40 lg:-ms-1" size={20} aria-hidden="true" />
-              <span className="max-lg:sr-only">Add Chart</span>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent className="lg:hidden" hidden={isMobile}>
-            Add Chart
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
