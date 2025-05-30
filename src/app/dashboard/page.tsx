@@ -12,15 +12,13 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { ActionButtons } from "@/components/action-buttons";
 import { AppSidebar } from "@/components/app-sidebar";
-import { Chart01 } from "@/components/chart-01";
-import { Chart02 } from "@/components/chart-02";
-import { Chart03 } from "@/components/chart-03";
-import { Chart04 } from "@/components/chart-04";
-import { Chart05 } from "@/components/chart-05";
-import { Chart06 } from "@/components/chart-06";
+import { KeyInsights } from "@/components/dashboard/key-insights";
+import { PriceForecastSummary } from "@/components/dashboard/price-forecast-summary";
+import { PriceTrendsChart } from "@/components/dashboard/price-trends-chart";
 
 export const metadata: Metadata = {
-  title: "Experiment 03 - Crafted.is",
+  title: "Food Price Forecasting Dashboard",
+  description: "Monitor and analyze food price trends and forecasts",
 };
 
 export default function Page() {
@@ -57,12 +55,11 @@ export default function Page() {
             </header>
             <div className="overflow-hidden">
               <div className="-m-px grid auto-rows-min *:-ms-px *:-mt-px @2xl:grid-cols-2">
-                <Chart01 />
-                <Chart02 />
-                <Chart03 />
-                <Chart04 />
-                <Chart05 />
-                <Chart06 />
+                <PriceForecastSummary />
+                <KeyInsights />
+                <div className="@2xl:col-span-2">
+                  <PriceTrendsChart />
+                </div>
               </div>
             </div>
           </div>

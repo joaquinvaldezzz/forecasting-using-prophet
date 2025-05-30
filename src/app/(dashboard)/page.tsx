@@ -3,7 +3,7 @@ import { KeyInsights } from "@/components/dashboard/key-insights";
 import { PriceForecastSummary } from "@/components/dashboard/price-forecast-summary";
 import { PriceTrendsChart } from "@/components/dashboard/price-trends-chart";
 
-export default function Home() {
+export default function DashboardPage() {
   return (
     <main className="container mx-auto space-y-6 p-6">
       <h1 className="mb-8 text-4xl font-bold">Food Price Forecast Dashboard</h1>

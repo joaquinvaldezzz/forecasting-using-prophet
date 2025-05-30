@@ -1,18 +1,13 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata } from "next";
+
+import { Navigation } from "@/components/layout/navigation";
 
 import "./globals.css";
 
-import { cn } from "@/lib/utils";
-
-const fontSans = Geist({
-  variable: "--font-sans",
-  subsets: ["latin"],
-});
-
-const fontMono = Geist_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-});
+export const metadata: Metadata = {
+  title: "Food Price Forecast Dashboard",
+  description: "Interactive dashboard for food price forecasting and analysis",
+};
 
 export default function RootLayout({
   children,
@@ -21,7 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(fontSans.variable, fontMono.variable, "antialiased")}>{children}</body>
+      <body className="min-w-80 antialiased">
+        <Navigation />
+        {children}
+      </body>
     </html>
   );
 }
