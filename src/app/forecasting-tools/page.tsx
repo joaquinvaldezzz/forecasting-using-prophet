@@ -1,16 +1,24 @@
-import { Card } from "@/components/ui/card";
+import { Fragment } from "react";
+
 import { ForecastingTools } from "@/components/forecast/forecasting-tools";
+import { SiteHeader } from "@/components/site-header";
 
-export default function ForecastingToolsPage() {
+/**
+ * The forecasting tools page.
+ *
+ * @returns The rendered page.
+ */
+export default function Page() {
   return (
-    <main className="container mx-auto p-6">
-      <h1 className="mb-8 text-4xl font-bold">Forecasting Tools</h1>
-
-      <div className="grid grid-cols-1 gap-6">
-        <Card className="p-6">
-          <ForecastingTools />
-        </Card>
+    <Fragment>
+      <SiteHeader title="Forecasting Tools" />
+      <div className="flex flex-1 flex-col">
+        <div className="@container/main mx-auto flex w-full max-w-6xl flex-1 flex-col gap-2">
+          <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+            <ForecastingTools />
+          </div>
+        </div>
       </div>
-    </main>
+    </Fragment>
   );
 }

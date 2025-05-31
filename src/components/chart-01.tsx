@@ -96,7 +96,7 @@ export function Chart01() {
       <CardContent>
         <ChartContainer
           config={chartConfig}
-          className="aspect-auto h-60 w-full [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-[var(--chart-1)]/15"
+          className="aspect-auto h-60 w-full [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-(--chart-1)/15"
         >
           <BarChart
             accessibilityLayer

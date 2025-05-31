@@ -1,19 +1,21 @@
 "use client";
 
 import {
-  RiFindReplaceLine,
-  RiLogoutCircleLine,
-  RiMore2Line,
-  RiPulseLine,
-  RiTimer2Line,
-  RiUserLine,
-} from "@remixicon/react";
+  IconCreditCard,
+  IconDotsVertical,
+  IconLogout,
+  IconNotification,
+  IconUserCircle,
+} from "@tabler/icons-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -43,16 +45,15 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="transition-[width,height] duration-200 ease-in-out in-data-[state=expanded]:size-6">
+              <Avatar className="h-8 w-8 rounded-lg grayscale">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
-              <div className="ms-1 grid flex-1 text-left text-sm leading-tight">
+              <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
+                <span className="truncate text-xs text-muted-foreground">{user.email}</span>
               </div>
-              <div className="flex size-8 items-center justify-center rounded-lg bg-sidebar-accent/50 in-[[data-slot=dropdown-menu-trigger]:hover]:bg-transparent">
-                <RiMore2Line className="size-5 opacity-40" size={20} />
-              </div>
+              <IconDotsVertical className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -61,33 +62,37 @@ export function NavUser({
             align="end"
             sideOffset={4}
           >
-            <DropdownMenuItem className="gap-3 px-1">
-              <RiTimer2Line size={20} className="text-muted-foreground/70" aria-hidden="true" />
-              <span>Dashboard</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="gap-3 px-1">
-              <RiUserLine size={20} className="text-muted-foreground/70" aria-hidden="true" />
-              <span>Profile</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="gap-3 px-1">
-              <RiPulseLine size={20} className="text-muted-foreground/70" aria-hidden="true" />
-              <span>Changelog</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="gap-3 px-1">
-              <RiFindReplaceLine
-                size={20}
-                className="text-muted-foreground/70"
-                aria-hidden="true"
-              />
-              <span>History</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="gap-3 px-1">
-              <RiLogoutCircleLine
-                size={20}
-                className="text-muted-foreground/70"
-                aria-hidden="true"
-              />
-              <span>Log out</span>
+            <DropdownMenuLabel className="p-0 font-normal">
+              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                <Avatar className="h-8 w-8 rounded-lg">
+                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                </Avatar>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-medium">{user.name}</span>
+                  <span className="truncate text-xs text-muted-foreground">{user.email}</span>
+                </div>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <IconUserCircle />
+                Account
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <IconCreditCard />
+                Billing
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <IconNotification />
+                Notifications
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <IconLogout />
+              Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

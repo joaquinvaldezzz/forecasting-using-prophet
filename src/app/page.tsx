@@ -1,30 +1,30 @@
-import { Card } from "@/components/ui/card";
-import { KeyInsights } from "@/components/dashboard/key-insights";
-import { PriceForecastSummary } from "@/components/dashboard/price-forecast-summary";
 import { PriceTrendsChart } from "@/components/dashboard/price-trends-chart";
 
-export default function Home() {
+/**
+ * The home page.
+ *
+ * @returns The rendered page.
+ */
+export default function Page() {
   return (
-    <main className="container mx-auto space-y-6 p-6">
-      <h1 className="mb-8 text-4xl font-bold">Food Price Forecast Dashboard</h1>
+    <main className="min-h-screen bg-background">
+      <div className="container mx-auto p-4 md:p-6 lg:p-8">
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold">Food Price Forecast Dashboard</h1>
+            <p className="text-sm text-muted-foreground">Jan 01, 2024 - Dec 31, 2024</p>
+          </div>
+        </div>
 
-      {/* Summary Section */}
-      <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <Card className="p-6">
-          <PriceForecastSummary />
-        </Card>
-        <Card className="p-6">
-          <KeyInsights />
-        </Card>
-      </section>
-
-      {/* Charts Section */}
-      <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <Card className="p-6">
-          <h2 className="mb-4 text-2xl font-semibold">NCR Food Price Trends (2018-2025)</h2>
+        <div className="grid gap-6">
+          {/* <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <ForecastSummary />
+            <KeyInsights />
+            <ModelTraining />
+          </div> */}
           <PriceTrendsChart />
-        </Card>
-      </section>
+        </div>
+      </div>
     </main>
   );
 }

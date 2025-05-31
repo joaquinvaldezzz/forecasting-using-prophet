@@ -55,6 +55,7 @@ const config: Config = tseslint.config(
     },
     rules: {
       "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/no-unsafe-type-assertion": "off",
       "@typescript-eslint/prefer-destructuring": "off",
       "react/react-in-jsx-scope": "off",
       "jsdoc/tag-lines": "off",

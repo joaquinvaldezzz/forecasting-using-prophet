@@ -5,7 +5,7 @@ import { CartesianGrid, Line, LineChart, Rectangle, XAxis, YAxis } from "rechart
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartConfig, ChartContainer, ChartTooltip } from "@/components/ui/chart";
+import { ChartContainer, ChartTooltip, type ChartConfig } from "@/components/ui/chart";
 import {
   Select,
   SelectContent,
@@ -60,46 +60,63 @@ interface CustomCursorProps {
   className?: string;
 }
 
+/**
+ * The custom cursor component.
+ *
+ * @param props The props to apply to the cursor.
+ * @returns The rendered cursor.
+ */
 function CustomCursor(props: CustomCursorProps) {
   const { fill, pointerEvents, height, points, className } = props;
 
-  if (!points || points.length === 0) {
+  if (points == null || points.length === 0) {
     return null;
   }
 
-  const { x, y } = points[0]!;
+  const { x, y } = points[0];
   return (
     <>
       <Rectangle
+        className={className}
+        width={24}
+        type="linear"
+        fill={fill}
+        height={height}
+        pointerEvents={pointerEvents}
         x={x - 12}
         y={y}
-        fill={fill}
-        pointerEvents={pointerEvents}
-        width={24}
-        height={height}
-        className={className}
-        type="linear"
       />
       <Rectangle
+        className="recharts-tooltip-inner-cursor"
+        width={1}
+        type="linear"
+        fill={fill}
+        height={height}
+        pointerEvents={pointerEvents}
         x={x - 1}
         y={y}
-        fill={fill}
-        pointerEvents={pointerEvents}
-        width={1}
-        height={height}
-        className="recharts-tooltip-inner-cursor"
-        type="linear"
       />
     </>
   );
 }
 
+/**
+ * The forecasting tools component.
+ *
+ * @returns The rendered forecasting tools.
+ */
 export function ForecastingTools() {
   const id = useId();
   const [selectedCommodity, setSelectedCommodity] = useState("rice");
   const [selectedYear, setSelectedYear] = useState("2024");
 
+  /**
+   * Handles the export of the selected commodity data.
+   *
+   * @param format The format to export the data in.
+   */
   const handleExport = (format: string) => {
+    // eslint-disable-next-line no-console -- TODO: Remove this comment when the export functionality is implemented
     console.log(`Exporting ${selectedCommodity} data for ${selectedYear} in ${format} format`);
   };
 
@@ -114,7 +131,7 @@ export function ForecastingTools() {
             </SelectTrigger>
             <SelectContent>
               {commodities.map((commodity) => (
-                <SelectItem key={commodity.value} value={commodity.value}>
+                <SelectItem value={commodity.value} key={commodity.value}>
                   {commodity.label}
                 </SelectItem>
               ))}
@@ -130,7 +147,7 @@ export function ForecastingTools() {
             </SelectTrigger>
             <SelectContent>
               {years.map((year) => (
-                <SelectItem key={year.value} value={year.value}>
+                <SelectItem value={year.value} key={year.value}>
                   {year.label}
                 </SelectItem>
               ))}
@@ -152,11 +169,11 @@ export function ForecastingTools() {
             </div>
             <div className="flex flex-wrap items-center gap-4">
               <div className="flex items-center gap-2">
-                <div aria-hidden="true" className="size-1.5 shrink-0 rounded-xs bg-chart-1"></div>
+                <div className="size-1.5 shrink-0 rounded-xs bg-chart-1" aria-hidden="true"></div>
                 <div className="text-[13px]/3 text-muted-foreground/50">Historical</div>
               </div>
               <div className="flex items-center gap-2">
-                <div aria-hidden="true" className="size-1.5 shrink-0 rounded-xs bg-chart-3"></div>
+                <div className="size-1.5 shrink-0 rounded-xs bg-chart-3" aria-hidden="true"></div>
                 <div className="text-[13px]/3 text-muted-foreground/50">Forecast</div>
               </div>
             </div>
@@ -164,31 +181,34 @@ export function ForecastingTools() {
         </CardHeader>
         <CardContent>
           <ChartContainer
-            config={chartConfig}
             className="aspect-auto h-60 w-full [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-(--chart-1)/15 [&_.recharts-rectangle.recharts-tooltip-inner-cursor]:fill-white/20"
+            config={chartConfig}
           >
             <LineChart
-              accessibilityLayer
               data={mockData}
               margin={{ left: -12, right: 12, top: 12 }}
+              accessibilityLayer
             >
               <defs>
-                <linearGradient id={`${id}-gradient`} x1="0" y1="0" x2="1" y2="0">
+                <linearGradient id={`${id}-gradient`} x1="0" x2="1" y1="0" y2="0">
                   <stop offset="0%" stopColor="var(--chart-2)" />
                   <stop offset="100%" stopColor="var(--chart-1)" />
                 </linearGradient>
               </defs>
-              <CartesianGrid vertical={false} strokeDasharray="2 2" stroke="var(--border)" />
-              <XAxis dataKey="year" tickLine={false} tickMargin={12} stroke="var(--border)" />
+              <CartesianGrid stroke="var(--border)" strokeDasharray="2 2" vertical={false} />
+              <XAxis dataKey="year" stroke="var(--border)" tickLine={false} tickMargin={12} />
               <YAxis
                 axisLine={false}
-                tickLine={false}
-                tickFormatter={(value) => `₱${value}`}
                 interval="preserveStartEnd"
+                tickFormatter={(value) => `₱${value}`}
+                tickLine={false}
               />
               <ChartTooltip
+                cursor={<CustomCursor fill="var(--chart-1)" />}
                 content={
                   <CustomTooltipContent
+                    valueFormatter={(value) => `₱${value}/kg`}
+                    dataKeys={[selectedCommodity]}
                     colorMap={{
                       [selectedCommodity]: "var(--chart-1)",
                     }}
@@ -196,18 +216,15 @@ export function ForecastingTools() {
                       [selectedCommodity]:
                         selectedCommodity.charAt(0).toUpperCase() + selectedCommodity.slice(1),
                     }}
-                    dataKeys={[selectedCommodity]}
-                    valueFormatter={(value) => `₱${value}/kg`}
                   />
                 }
-                cursor={<CustomCursor fill="var(--chart-1)" />}
               />
               <Line
+                strokeWidth={2}
                 type="linear"
                 dataKey={selectedCommodity}
-                stroke={`url(#${id}-gradient)`}
-                strokeWidth={2}
                 dot={false}
+                stroke={`url(#${id}-gradient)`}
                 activeDot={{
                   r: 5,
                   fill: "var(--chart-1)",
@@ -221,9 +238,27 @@ export function ForecastingTools() {
       </Card>
 
       <div className="flex gap-4">
-        <Button onClick={() => handleExport("csv")}>Export CSV</Button>
-        <Button onClick={() => handleExport("png")}>Export PNG</Button>
-        <Button onClick={() => handleExport("pdf")}>Export PDF</Button>
+        <Button
+          onClick={() => {
+            handleExport("csv");
+          }}
+        >
+          Export CSV
+        </Button>
+        <Button
+          onClick={() => {
+            handleExport("png");
+          }}
+        >
+          Export PNG
+        </Button>
+        <Button
+          onClick={() => {
+            handleExport("pdf");
+          }}
+        >
+          Export PDF
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">

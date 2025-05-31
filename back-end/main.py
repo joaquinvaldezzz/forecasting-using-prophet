@@ -123,5 +123,33 @@ def get_insights():
     return jsonify(insights)
 
 
+@app.route("/api/price-trends/<year>", methods=['GET'])
+def get_price_trends(year):
+    """
+    Get price trends data for a specific year.
+    """
+    try:
+        year = int(year)
+        if year < 2018 or year > 2025:
+            return jsonify({'error': 'Year out of range'}), 400
+
+        df = generate_mock_data()
+        year_data = df[df['ds'].dt.year == year].copy()
+
+        # Format the data for the frontend
+        formatted_data = []
+        for _, row in year_data.iterrows():
+            formatted_data.append({
+                'month': row['ds'].strftime('%b'),
+                'rice': round(row['rice'], 2),
+                'vegetables': round(row['vegetables'], 2),
+                'meat': round(row['meat'], 2)
+            })
+
+        return jsonify(formatted_data)
+    except ValueError:
+        return jsonify({'error': 'Invalid year format'}), 400
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
