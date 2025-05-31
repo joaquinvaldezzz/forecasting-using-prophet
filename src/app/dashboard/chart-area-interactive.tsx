@@ -6,14 +6,7 @@ import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import { exportChartToCSV, exportChartToPDF, exportChartToPNG } from "@/lib/chart-export";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
@@ -77,10 +70,7 @@ export function ChartAreaInteractive({ data }: ChartAreaInteractiveProps) {
     <Card className="@container/card">
       <CardHeader>
         <CardTitle>Latest food price forecasts</CardTitle>
-        <CardDescription>
-          <span className="hidden @[540px]/card:block">Total for the last 3 months</span>
-          <span className="@[540px]/card:hidden">Last 3 months</span>
-        </CardDescription>
+
         <CardAction>
           <div className="flex gap-2">
             <Button
