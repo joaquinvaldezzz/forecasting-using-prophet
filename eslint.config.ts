@@ -58,6 +58,12 @@ const config: Config = tseslint.config(
       "@typescript-eslint/no-unsafe-type-assertion": "off",
       "@typescript-eslint/prefer-destructuring": "off",
       "react/react-in-jsx-scope": "off",
+      "react-refresh/only-export-components": [
+        "error",
+        {
+          allowExportNames: ["metadata"],
+        },
+      ],
       "jsdoc/tag-lines": "off",
       "jsdoc/check-line-alignment": "off",
       "perfectionist/sort-jsx-props": [
