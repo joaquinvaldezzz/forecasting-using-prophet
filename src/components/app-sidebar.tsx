@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import type { ComponentProps } from "react";
 import Link from "next/link";
 import { IconChartHistogram, IconDashboard, IconInnerShadowTop } from "@tabler/icons-react";
 
@@ -18,9 +18,9 @@ import { NavUser } from "@/components/nav-user";
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: "Joaquin Valdez",
+    email: "javaldez1642qc@student.fatima.edu.ph",
+    avatar: "",
   },
   navMain: [
     {
@@ -29,7 +29,7 @@ const data = {
       icon: IconDashboard,
     },
     {
-      title: "Forecast",
+      title: "Forecasting Tools",
       url: "/forecasting-tools",
       icon: IconChartHistogram,
     },
@@ -42,7 +42,7 @@ const data = {
  * @param props The props to apply to the sidebar.
  * @returns The rendered sidebar.
  */
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -50,8 +50,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton className="data-[slot=sidebar-menu-button]:p-1.5!" asChild>
               <Link href="#">
-                <IconInnerShadowTop className="size-5!" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <IconInnerShadowTop className="size-5" />
+                <span className="text-base font-semibold">Untitled</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

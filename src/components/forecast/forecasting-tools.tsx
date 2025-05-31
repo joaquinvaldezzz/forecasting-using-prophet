@@ -260,22 +260,6 @@ export function ForecastingTools() {
           Export PDF
         </Button>
       </div>
-
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <Card className="p-6">
-          <h2 className="mb-4 text-2xl font-semibold">Model Training</h2>
-          <p className="text-muted-foreground">
-            Visualize model training metrics and performance indicators
-          </p>
-        </Card>
-
-        <Card className="p-6">
-          <h2 className="mb-4 text-2xl font-semibold">Model Testing</h2>
-          <p className="text-muted-foreground">
-            View model accuracy and prediction confidence intervals
-          </p>
-        </Card>
-      </div>
     </div>
   );
 }

@@ -60,35 +60,46 @@ def index():
 @app.route("/api/forecast", methods=['GET'])
 def get_forecast():
     """
-    Get forecast data for a given commodity.
+    Get forecast data for given commodities. If no commodities are specified, returns all.
     """
-    commodity = request.args.get('commodity', 'rice')
-    if commodity not in commodities:
-        return jsonify({'error': 'Invalid commodity'}), 400
+    requested_commodities = request.args.get('commodities', '').split(',')
+    if not requested_commodities[0]:  # If empty string after split
+        requested_commodities = commodities
+    else:
+        # Validate all requested commodities
+        invalid_commodities = [c for c in requested_commodities if c not in commodities]
+        if invalid_commodities:
+            return jsonify({'error': f'Invalid commodities: {", ".join(invalid_commodities)}'}), 400
 
     # Get historical data
     df = generate_mock_data()
-    historical_data = df[['ds', commodity]].rename(columns={commodity: 'price'})
-    historical_data['ds'] = historical_data['ds'].dt.strftime('%Y-%m-%d')
+    result = {}
 
-    # Generate forecast
-    model = models[commodity]
-    future = model.make_future_dataframe(periods=365)
-    forecast = model.predict(future)
+    for commodity in requested_commodities:
+        # Historical data
+        historical_data = df[['ds', commodity]].rename(columns={commodity: 'price'})
+        historical_data['ds'] = historical_data['ds'].dt.strftime('%Y-%m-%d')
 
-    # Format forecast data
-    forecast_data = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail(365)
-    forecast_data['ds'] = forecast_data['ds'].dt.strftime('%Y-%m-%d')
-    forecast_data = forecast_data.rename(columns={
-        'yhat': 'price',
-        'yhat_lower': 'lower_bound',
-        'yhat_upper': 'upper_bound'
-    })
+        # Generate forecast
+        model = models[commodity]
+        future = model.make_future_dataframe(periods=365)
+        forecast = model.predict(future)
 
-    return jsonify({
-        'historical': historical_data.to_dict('records'),
-        'forecast': forecast_data.to_dict('records')
-    })
+        # Format forecast data
+        forecast_data = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail(365)
+        forecast_data['ds'] = forecast_data['ds'].dt.strftime('%Y-%m-%d')
+        forecast_data = forecast_data.rename(columns={
+            'yhat': 'price',
+            'yhat_lower': 'lower_bound',
+            'yhat_upper': 'upper_bound'
+        })
+
+        result[commodity] = {
+            'historical': historical_data.to_dict('records'),
+            'forecast': forecast_data.to_dict('records')
+        }
+
+    return jsonify(result)
 
 
 @app.route("/api/commodities", methods=['GET'])
