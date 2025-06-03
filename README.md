@@ -26,7 +26,7 @@ This project is a simple web app for forecasting food prices using the [Prophet]
    cd forecasting-using-prophet
    ```
 
-3. Install frontend dependencies:
+3. Install front-end dependencies:
 
    ```bash
    pnpm install
