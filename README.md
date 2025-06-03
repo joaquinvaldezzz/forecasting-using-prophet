@@ -1,6 +1,6 @@
 # Food Price Forecasting using Python
 
-This project is a simple web app for forecasting food prices using the [Prophet](https://facebook.github.io/prophet) library. The frontend is built with [Next.js](https://nextjs.org), [Tailwind CSS](https://tailwindcss.com), and [shadcn/ui](https://ui.shadcn.com), while the backend uses [Python](https://www.python.org).
+This project is a simple web app for forecasting food prices using the [Prophet](https://facebook.github.io/prophet) library. The front-end is built with [Next.js](https://nextjs.org), [Tailwind CSS](https://tailwindcss.com), and [shadcn/ui](https://ui.shadcn.com), while the back-end uses [Python](https://www.python.org).
 
 ## Prerequisites
 
