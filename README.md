@@ -10,7 +10,9 @@ This project is a simple web app for forecasting food prices using the [Prophet]
 - [Python (3.13.2)](https://www.python.org/downloads/release/python-3132) — Used for the backend to train the model and make predictions.
 - [Visual Studio Code](https://code.visualstudio.com/download) — A code editor for writing and editing code, or use any editor you prefer.
 
-## Local installation
+## Local development setup
+
+### Front-end installation
 
 1. [Download](https://github.com/joaquinvaldezzz/forecasting-using-prophet/archive/refs/heads/main.zip) or clone the repository:
 
@@ -30,42 +32,46 @@ This project is a simple web app for forecasting food prices using the [Prophet]
    pnpm install
    ```
 
-4. Go to the back-end directory:
-
-   ```bash
-   cd back-end
-   ```
-
-5. Activate the virtual environment:
-
-   ```bash
-   source .venv/bin/activate
-   ```
-
-   If you're on Windows, use:
-
-   ```bash
-   source .venv\Scripts\activate
-   ```
-
-6. Install Python dependencies:
-
-   ```bash
-   pip3 install -r requirements.txt
-   ```
-
-7. Start the server:
-
-   ```bash
-   python3 main.py
-   ```
-
-8. In a new terminal, return to the root directory if needed, then start the front-end development server:
+4. Start the development server:
 
    ```bash
    pnpm run dev
    ```
 
-9. Open your browser and go to `http://localhost:3000` to view the app.
+5. Open your browser and go to `http://localhost:3000` to view the app.
 
 For more details, check out the [Next.js documentation](https://nextjs.org/docs).
+
+### Back-end installation
+
+1. Go to the back-end directory:
+
+   ```bash
+   cd back-end
+   ```
+
+2. Activate the virtual environment:
+
+   ```bash
+   source .venv\Scripts\activate
+   ```
+
+   If you're on Mac, use:
+
+   ```bash
+   source .venv/bin/activate
+   ```
+
+3. Install Python dependencies:
+
+   ```bash
+   pip3 install -r requirements.txt
+   ```
+
+4. Start the server:
+
+   ```bash
+   python3 main.py
+   ```
+
+For more details, see the [Prophet documentation](https://facebook.github.io/prophet/docs/quick_start.html).
