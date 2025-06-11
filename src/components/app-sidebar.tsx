@@ -7,14 +7,12 @@ import { IconChartHistogram, IconDashboard, IconInnerShadowTop } from "@tabler/i
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { NavMain } from "@/components/nav-main";
-import { NavUser } from "@/components/nav-user";
 
 const data = {
   user: {
@@ -60,9 +58,6 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
     </Sidebar>
   );
 }
