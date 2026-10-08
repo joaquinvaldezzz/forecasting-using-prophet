@@ -3,11 +3,56 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "dev": "next dev --turbopack",
+    "format": "prettier --write .",
     "lint": "next lint",
-    "format": "prettier --write ."
+    "prepare": "husky",
+    "start": "next start"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --cache --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
+    ]
+  },
+  "prettier": {
+    "importOrder": [
+      "^(react/(.*)$)|^(react$)",
+      "^(next/(.*)$)|^(next$)",
+      "<THIRD_PARTY_MODULES>",
+      "",
+      "^types$",
+      "^@/types/(.*)$",
+      "^@/config/(.*)$",
+      "^@/lib/(.*)$",
+      "^@/hooks/(.*)$",
+      "^@/components/ui/(.*)$",
+      "^@/components/(.*)$",
+      "^@/registry/(.*)$",
+      "^@/styles/(.*)$",
+      "^@/app/(.*)$",
+      "^@/pages/(.*)$",
+      "",
+      "^[./]"
+    ],
+    "plugins": [
+      "@ianvs/prettier-plugin-sort-imports",
+      "prettier-plugin-jsdoc",
+      "prettier-plugin-tailwindcss"
+    ],
+    "printWidth": 100,
+    "tailwindAttributes": [
+      "classNames"
+    ],
+    "tailwindFunctions": [
+      "cva",
+      "cn"
+    ],
+    "tailwindStylesheet": "src/app/globals.css"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -69,6 +114,8 @@
     "zod": "^3.25.42"
   },
   "devDependencies": {
+    "@commitlint/cli": "^21.2.3",
+    "@commitlint/config-conventional": "^21.2.3",
     "@eslint/compat": "^1.2.9",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.26.0",
@@ -90,6 +137,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
+    "husky": "^9.1.7",
     "prettier": "^3.5.3",
     "prettier-plugin-jsdoc": "^1.3.2",
     "prettier-plugin-tailwindcss": "^0.6.12",
@@ -98,47 +146,5 @@
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.32.1"
   },
-  "prettier": {
-    "printWidth": 100,
-    "plugins": [
-      "@ianvs/prettier-plugin-sort-imports",
-      "prettier-plugin-jsdoc",
-      "prettier-plugin-tailwindcss"
-    ],
-    "importOrder": [
-      "^(react/(.*)$)|^(react$)",
-      "^(next/(.*)$)|^(next$)",
-      "<THIRD_PARTY_MODULES>",
-      "",
-      "^types$",
-      "^@/types/(.*)$",
-      "^@/config/(.*)$",
-      "^@/lib/(.*)$",
-      "^@/hooks/(.*)$",
-      "^@/components/ui/(.*)$",
-      "^@/components/(.*)$",
-      "^@/registry/(.*)$",
-      "^@/styles/(.*)$",
-      "^@/app/(.*)$",
-      "^@/pages/(.*)$",
-      "",
-      "^[./]"
-    ],
-    "tailwindStylesheet": "src/app/globals.css",
-    "tailwindAttributes": [
-      "classNames"
-    ],
-    "tailwindFunctions": [
-      "cva",
-      "cn"
-    ]
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@tailwindcss/oxide",
-      "core-js",
-      "sharp",
-      "unrs-resolver"
-    ]
-  }
+  "packageManager": "pnpm@11.1.2"
 }
