@@ -3,9 +3,10 @@
 import { useId, useState } from "react";
 import { CartesianGrid, Line, LineChart, Rectangle, XAxis, YAxis } from "recharts";
 
+import type { ChartConfig } from "@/components/ui/chart";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartContainer, ChartTooltip, type ChartConfig } from "@/components/ui/chart";
+import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import {
   Select,
   SelectContent,

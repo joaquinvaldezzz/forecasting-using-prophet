@@ -1,6 +1,6 @@
 import { Fragment } from "react";
-import type { Metadata } from "next";
 
+import type { Metadata } from "next";
 import { fetchWithFallback } from "@/lib/api-client";
 import { SectionCards } from "@/components/section-cards";
 import { SiteHeader } from "@/components/site-header";

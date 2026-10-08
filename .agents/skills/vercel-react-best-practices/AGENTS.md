@@ -930,25 +930,25 @@ When loading static assets (fonts, logos, images, config files) in route handler
 
 ```typescript
 // app/api/og/route.tsx
-import { ImageResponse } from 'next/og'
+import { ImageResponse } from "next/og";
 
 export async function GET(request: Request) {
   // Runs on EVERY request - expensive!
-  const fontData = await fetch(
-    new URL('./fonts/Inter.ttf', import.meta.url)
-  ).then(res => res.arrayBuffer())
+  const fontData = await fetch(new URL("./fonts/Inter.ttf", import.meta.url)).then((res) =>
+    res.arrayBuffer(),
+  );
 
-  const logoData = await fetch(
-    new URL('./images/logo.png', import.meta.url)
-  ).then(res => res.arrayBuffer())
+  const logoData = await fetch(new URL("./images/logo.png", import.meta.url)).then((res) =>
+    res.arrayBuffer(),
+  );
 
   return new ImageResponse(
-    <div style={{ fontFamily: 'Inter' }}>
+    <div style={{ fontFamily: "Inter" }}>
       <img src={logoData} />
       Hello World
     </div>,
-    { fonts: [{ name: 'Inter', data: fontData }] }
-  )
+    { fonts: [{ name: "Inter", data: fontData }] },
+  );
 }
 ```
 
@@ -956,28 +956,28 @@ export async function GET(request: Request) {
 
 ```typescript
 // app/api/og/route.tsx
-import { ImageResponse } from 'next/og'
+import { ImageResponse } from "next/og";
 
 // Module-level: runs ONCE when module is first imported
-const fontData = fetch(
-  new URL('./fonts/Inter.ttf', import.meta.url)
-).then(res => res.arrayBuffer())
+const fontData = fetch(new URL("./fonts/Inter.ttf", import.meta.url)).then((res) =>
+  res.arrayBuffer(),
+);
 
-const logoData = fetch(
-  new URL('./images/logo.png', import.meta.url)
-).then(res => res.arrayBuffer())
+const logoData = fetch(new URL("./images/logo.png", import.meta.url)).then((res) =>
+  res.arrayBuffer(),
+);
 
 export async function GET(request: Request) {
   // Await the already-started promises
-  const [font, logo] = await Promise.all([fontData, logoData])
+  const [font, logo] = await Promise.all([fontData, logoData]);
 
   return new ImageResponse(
-    <div style={{ fontFamily: 'Inter' }}>
+    <div style={{ fontFamily: "Inter" }}>
       <img src={logo} />
       Hello World
     </div>,
-    { fonts: [{ name: 'Inter', data: font }] }
-  )
+    { fonts: [{ name: "Inter", data: font }] },
+  );
 }
 ```
 
@@ -985,27 +985,23 @@ export async function GET(request: Request) {
 
 ```typescript
 // app/api/og/route.tsx
-import { ImageResponse } from 'next/og'
-import { readFileSync } from 'fs'
-import { join } from 'path'
+import { ImageResponse } from "next/og";
+import { readFileSync } from "fs";
+import { join } from "path";
 
 // Synchronous read at module level - blocks only during module init
-const fontData = readFileSync(
-  join(process.cwd(), 'public/fonts/Inter.ttf')
-)
+const fontData = readFileSync(join(process.cwd(), "public/fonts/Inter.ttf"));
 
-const logoData = readFileSync(
-  join(process.cwd(), 'public/images/logo.png')
-)
+const logoData = readFileSync(join(process.cwd(), "public/images/logo.png"));
 
 export async function GET(request: Request) {
   return new ImageResponse(
-    <div style={{ fontFamily: 'Inter' }}>
+    <div style={{ fontFamily: "Inter" }}>
       <img src={logoData} />
       Hello World
     </div>,
-    { fonts: [{ name: 'Inter', data: fontData }] }
-  )
+    { fonts: [{ name: "Inter", data: fontData }] },
+  );
 }
 ```
 
@@ -2954,14 +2950,14 @@ Use a module-level Map to cache function results when the same function is calle
 function ProjectList({ projects }: { projects: Project[] }) {
   return (
     <div>
-      {projects.map(project => {
+      {projects.map((project) => {
         // slugify() called 100+ times for same project names
-        const slug = slugify(project.name)
+        const slug = slugify(project.name);
 
-        return <ProjectCard key={project.id} slug={slug} />
+        return <ProjectCard key={project.id} slug={slug} />;
       })}
     </div>
-  )
+  );
 }
 ```
 
@@ -2969,28 +2965,28 @@ function ProjectList({ projects }: { projects: Project[] }) {
 
 ```typescript
 // Module-level cache
-const slugifyCache = new Map<string, string>()
+const slugifyCache = new Map<string, string>();
 
 function cachedSlugify(text: string): string {
   if (slugifyCache.has(text)) {
-    return slugifyCache.get(text)!
+    return slugifyCache.get(text)!;
   }
-  const result = slugify(text)
-  slugifyCache.set(text, result)
-  return result
+  const result = slugify(text);
+  slugifyCache.set(text, result);
+  return result;
 }
 
 function ProjectList({ projects }: { projects: Project[] }) {
   return (
     <div>
-      {projects.map(project => {
+      {projects.map((project) => {
         // Computed only once per unique project name
-        const slug = cachedSlugify(project.name)
+        const slug = cachedSlugify(project.name);
 
-        return <ProjectCard key={project.id} slug={slug} />
+        return <ProjectCard key={project.id} slug={slug} />;
       })}
     </div>
-  )
+  );
 }
 ```
 
@@ -3506,11 +3502,8 @@ items.filter(item => allowedIds.has(item.id))
 ```typescript
 function UserList({ users }: { users: User[] }) {
   // Mutates the users prop array!
-  const sorted = useMemo(
-    () => users.sort((a, b) => a.name.localeCompare(b.name)),
-    [users]
-  )
-  return <div>{sorted.map(renderUser)}</div>
+  const sorted = useMemo(() => users.sort((a, b) => a.name.localeCompare(b.name)), [users]);
+  return <div>{sorted.map(renderUser)}</div>;
 }
 ```
 
@@ -3519,11 +3512,8 @@ function UserList({ users }: { users: User[] }) {
 ```typescript
 function UserList({ users }: { users: User[] }) {
   // Creates new sorted array, original unchanged
-  const sorted = useMemo(
-    () => users.toSorted((a, b) => a.name.localeCompare(b.name)),
-    [users]
-  )
-  return <div>{sorted.map(renderUser)}</div>
+  const sorted = useMemo(() => users.toSorted((a, b) => a.name.localeCompare(b.name)), [users]);
+  return <div>{sorted.map(renderUser)}</div>;
 }
 ```
 

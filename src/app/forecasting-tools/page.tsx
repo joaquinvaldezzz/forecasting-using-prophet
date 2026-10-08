@@ -1,6 +1,6 @@
 import { Fragment } from "react";
-import type { Metadata } from "next";
 
+import type { Metadata } from "next";
 import { fetchWithFallback } from "@/lib/api-client";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { SiteHeader } from "@/components/site-header";

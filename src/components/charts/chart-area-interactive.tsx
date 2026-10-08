@@ -4,10 +4,11 @@ import { useId, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { CartesianGrid, Line, LineChart, Rectangle, XAxis, YAxis } from "recharts";
 
+import type { ChartConfig } from "@/components/ui/chart";
 import { exportChartToCSV, exportChartToPDF, exportChartToPNG } from "@/lib/chart-export";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartContainer, ChartTooltip, type ChartConfig } from "@/components/ui/chart";
+import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import {
   Select,
   SelectContent,

@@ -3,16 +3,12 @@
 import { useRef } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 
+import type { ChartConfig } from "@/components/ui/chart";
 import { exportChartToCSV, exportChartToPDF, exportChartToPNG } from "@/lib/chart-export";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from "@/components/ui/chart";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 const chartConfig = {
   rice: {

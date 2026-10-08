@@ -7,7 +7,7 @@
 > in `plans/README.md` — unless a reviewer dispatched you and told you they
 > maintain the index.
 >
-> **Drift check (run first)**: `git diff --stat 5dcf0c9..HEAD -- src/components/ src/app/ src/next.config.mjs`
+> **Drift check (run first)**: `git diff --stat 6e6c375..HEAD -- src/components/ src/app/ src/next.config.mjs`
 > If any in-scope file changed since this plan was written, compare the
 > "Current state" excerpts against the live code before proceeding; on a
 > mismatch, treat it as a STOP condition.
@@ -19,7 +19,7 @@
 - **Risk**: LOW
 - **Depends on**: plans/001-fix-typecheck-build-and-eslint.md
 - **Category**: tech-debt
-- **Planned at**: commit `5dcf0c9`, 2026-10-08
+- **Planned at**: commit `6e6c375`, 2026-10-08
 
 ## Why this matters
 

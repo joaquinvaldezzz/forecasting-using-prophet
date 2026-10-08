@@ -1,9 +1,9 @@
 "use client";
 
-import type { ComponentProps } from "react";
 import Link from "next/link";
 import { IconChartHistogram, IconDashboard, IconInnerShadowTop } from "@tabler/icons-react";
 
+import type { ComponentProps } from "react";
 import {
   Sidebar,
   SidebarContent,

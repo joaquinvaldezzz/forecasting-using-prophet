@@ -1,6 +1,6 @@
-import type { CSSProperties, ReactNode } from "react";
 import { Inter } from "next/font/google";
 
+import type { CSSProperties, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";

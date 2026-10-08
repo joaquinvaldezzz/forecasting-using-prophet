@@ -56,10 +56,11 @@ If no antislop pointer exists and this file is being read for the first time, ru
    - People: `skills/antislop-human/SKILL.md`
    - Mobile / responsive: `skills/antislop-layoutmobile/SKILL.md`
    - Code comments: `skills/antislop-code/SKILL.md`
-   Before starting, follow the core's "Two Usage Modes" section in strict order: explicit session instruction first, then global preference, then ask. A session instruction always wins. For a resolved mode, say `antislop active: <mode> (session override).` or `antislop active: <mode> (global preference).` once before presenting findings or making edits, using the actual mode and source. Acknowledging the user's request without naming the source does not replace this notice.
-   Only an explicit choice of antislop during or after selects a session mode. A request to review, audit, or avoid file edits does not select a mode; read the global preference in that case. Another skill's mode does not select antislop's mode.
-   If the mode is unresolved, ask during/after and end the response; wait for the answer before any UI review, planning, or concept. For read-only tasks, put the active-mode notice only at the start of the final answer, never in progress messages. For editing tasks, announce before the first edit and omit it from the final answer.
-   To update antislop later: download `antislop.md` again, or run `npx antislop-ai --update` if it was installed as skill folders.
+     Before starting, follow the core's "Two Usage Modes" section in strict order: explicit session instruction first, then global preference, then ask. A session instruction always wins. For a resolved mode, say `antislop active: <mode> (session override).` or `antislop active: <mode> (global preference).` once before presenting findings or making edits, using the actual mode and source. Acknowledging the user's request without naming the source does not replace this notice.
+     Only an explicit choice of antislop during or after selects a session mode. A request to review, audit, or avoid file edits does not select a mode; read the global preference in that case. Another skill's mode does not select antislop's mode.
+     If the mode is unresolved, ask during/after and end the response; wait for the answer before any UI review, planning, or concept. For read-only tasks, put the active-mode notice only at the start of the final answer, never in progress messages. For editing tasks, announce before the first edit and omit it from the final answer.
+     To update antislop later: download `antislop.md` again, or run `npx antislop-ai --update` if it was installed as skill folders.
+
    <!-- antislop:end -->
    ```
 
@@ -248,7 +249,7 @@ These are the most common patterns found in AI-generated designs. Use this table
 | **Generic AI Icons**                 | Sparkle, Star, Magic, Lightning, Diamond, Cube, Robot, AI Orb                                                                              |
 | **Lucide Icons**                     | Every icon from the same thin-stroke rounded library (Lucide or a clone), the default icon-set look                                        |
 | **Colored Left Stripe**              | A thin colored vertical bar on the left edge of cards, rows, or section headers, as decoration                                             |
-| **Small Arrows (→ / ↗)**            | Placed on almost every button as pure decoration                                                                                           |
+| **Small Arrows (→ / ↗)**             | Placed on almost every button as pure decoration                                                                                           |
 | **AI Capsule Badges**                | Pill shape, thin border, glow, small dot, uppercase, containing: "AI Powered", "Beta", "New"                                               |
 | **Eyebrow Badge Above the Headline** | A small pill parked directly above the H1, often with a dot and a thin border, holding a category label the headline already says          |
 | **Generic AI Typography**            | Large monospace headings, HOW IT WORKS uppercase with wide tracking                                                                        |
