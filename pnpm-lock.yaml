@@ -177,8 +177,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.1.5(@types/react@19.1.6))(@types/react@19.1.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       zod:
-        specifier: ^3.25.42
-        version: 3.25.42
+        specifier: ^4.6.5
+        version: 4.6.5
     devDependencies:
       '@commitlint/cli':
         specifier: ^21.2.3
@@ -4457,8 +4457,8 @@ packages:
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
 
-  zod@3.25.42:
-    resolution: {integrity: sha512-PcALTLskaucbeHc41tU/xfjfhcz8z0GdhhDcSgrCTmSazUuqnYqiXO63M0QUBVwpBlsLsNVn5qHSC5Dw3KZvaQ==}
+  zod@4.6.5:
+    resolution: {integrity: sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q==}
 
 snapshots:
 
@@ -7314,8 +7314,8 @@ snapshots:
       '@babel/parser': 7.27.3
       eslint: 9.27.0(jiti@2.6.1)
       hermes-parser: 0.25.1
-      zod: 3.25.42
-      zod-validation-error: 4.0.2(zod@3.25.42)
+      zod: 4.6.5
+      zod-validation-error: 4.0.2(zod@4.6.5)
     transitivePeerDependencies:
       - supports-color
 
@@ -9002,8 +9002,8 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod-validation-error@4.0.2(zod@3.25.42):
+  zod-validation-error@4.0.2(zod@4.6.5):
     dependencies:
-      zod: 3.25.42
+      zod: 4.6.5
 
-  zod@3.25.42: {}
+  zod@4.6.5: {}
