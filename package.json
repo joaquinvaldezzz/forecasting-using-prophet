@@ -6,13 +6,14 @@
     "build": "next build",
     "dev": "next dev --turbopack",
     "format": "prettier --write .",
-    "lint": "next lint",
+    "lint": "eslint --ext .ts,.tsx --cache",
+    "lint:fix": "eslint --ext .ts,.tsx --fix--cache",
     "prepare": "husky",
     "start": "next start"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "eslint --cache --fix",
+      "eslint --fix --cache",
       "prettier --write"
     ],
     "*.{json,css,md}": [
@@ -118,7 +119,7 @@
     "@commitlint/config-conventional": "^21.2.3",
     "@eslint/compat": "^1.2.9",
     "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.26.0",
+    "@eslint/js": "^9.27.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.2",
     "@next/eslint-plugin-next": "^15.3.3",
     "@tailwindcss/postcss": "^4.1.8",
@@ -127,13 +128,14 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9.26.0",
+    "eslint": "^9.27.0",
+    "eslint-config-airbnb-extended": "^3.3.0",
     "eslint-config-love": "^119.0.0",
     "eslint-config-next": "15.3.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-jsdoc": "^50.6.17",
     "eslint-plugin-perfectionist": "^4.12.3",
-    "eslint-plugin-prettier": "^5.4.0",
+    "eslint-plugin-prettier": "^5.4.1",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
