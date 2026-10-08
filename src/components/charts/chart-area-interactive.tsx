@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useId, useRef, useState } from "react";
+import { Fragment, useId, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { CartesianGrid, Line, LineChart, Rectangle, XAxis, YAxis } from "recharts";
 
@@ -65,9 +65,13 @@ interface CustomCursorProps {
  * @param props The props.
  * @returns The rendered custom cursor.
  */
-function CustomCursor(props: CustomCursorProps) {
-  const { fill, pointerEvents, height, points, className } = props;
-
+function CustomCursor({
+  fill = undefined,
+  pointerEvents = undefined,
+  height = undefined,
+  points = undefined,
+  className = undefined,
+}: CustomCursorProps) {
   if (points == null || points.length === 0) {
     return null;
   }
@@ -128,6 +132,23 @@ export function ChartAreaInteractive({
     queryFn: async () => fetchData(selectedYear),
   });
 
+  const colorMap = useMemo(
+    () => Object.fromEntries(Object.entries(config).map(([key, { color }]) => [key, color ?? ""])),
+    [config],
+  );
+
+  const labelMap = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(config).map(([key, { label }]) => [key, label ?? ""]),
+      ) as Record<string, string>,
+    [config],
+  );
+
+  const dataKeys = useMemo(() => Object.keys(config), [config]);
+
+  const firstConfigColor = useMemo(() => Object.values(config)[0]?.color, [config]);
+
   const getAverageValue = (key: string) => {
     if (chartData == null) {
       return 0;
@@ -158,6 +179,8 @@ export function ChartAreaInteractive({
       case "pdf":
         await exportChartToPDF(chartRef.current, `${filename}.pdf`);
         break;
+      default:
+        break;
     }
   };
 
@@ -169,11 +192,11 @@ export function ChartAreaInteractive({
             <CardTitle>{title}</CardTitle>
             <div className="flex items-start gap-2">
               <div className="text-2xl font-semibold">{selectedYear}</div>
-              {!isLoading && chartData != null && (
+              {!isLoading && chartData != null ? (
                 <div className="text-sm text-muted-foreground">
                   {chartData.length} months of data
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-4">
@@ -184,13 +207,15 @@ export function ChartAreaInteractive({
                   style={{ backgroundColor: color }}
                   aria-hidden="true"
                 />
-                <div className="text-[13px]/3 text-muted-foreground/50">
+                <div className="text-xs/3 text-muted-foreground/50">
                   {label} (₱{getAverageValue(key)}/kg)
-                  {!isLoading && chartData != null && (
-                    <span className={getValueChange(key) >= 0 ? "text-red-500" : "text-green-500"}>
+                  {!isLoading && chartData != null ? (
+                    <span
+                      className={getValueChange(key) >= 0 ? "text-destructive" : "text-chart-2"}
+                    >
                       {getValueChange(key) >= 0 ? " ↑" : " ↓"} {Math.abs(getValueChange(key))}%
                     </span>
-                  )}
+                  ) : null}
                 </div>
               </div>
             ))}
@@ -201,7 +226,7 @@ export function ChartAreaInteractive({
               size="sm"
               variant="outline"
               onClick={() => {
-                void handleExport("csv");
+                handleExport("csv");
               }}
             >
               Export CSV
@@ -211,7 +236,7 @@ export function ChartAreaInteractive({
               size="sm"
               variant="outline"
               onClick={() => {
-                void handleExport("png");
+                handleExport("png");
               }}
             >
               Export PNG
@@ -221,7 +246,7 @@ export function ChartAreaInteractive({
               size="sm"
               variant="outline"
               onClick={() => {
-                void handleExport("pdf");
+                handleExport("pdf");
               }}
             >
               Export PDF
@@ -283,19 +308,13 @@ export function ChartAreaInteractive({
                   tickLine={false}
                 />
                 <ChartTooltip
-                  cursor={<CustomCursor fill={Object.values(config)[0]?.color} />}
+                  cursor={<CustomCursor fill={firstConfigColor} />}
                   content={
                     <CustomTooltipContent
                       valueFormatter={(value) => `₱${value}/kg`}
-                      dataKeys={Object.keys(config)}
-                      colorMap={Object.fromEntries(
-                        Object.entries(config).map(([key, { color }]) => [key, color ?? ""]),
-                      )}
-                      labelMap={
-                        Object.fromEntries(
-                          Object.entries(config).map(([key, { label }]) => [key, label ?? ""]),
-                        ) as Record<string, string>
-                      }
+                      dataKeys={dataKeys}
+                      colorMap={colorMap}
+                      labelMap={labelMap}
                     />
                   }
                 />
