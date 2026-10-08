@@ -9,7 +9,8 @@
     "lint": "eslint --ext .ts,.tsx --cache",
     "lint:fix": "eslint --ext .ts,.tsx --fix--cache",
     "prepare": "husky",
-    "start": "next start"
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -117,6 +118,7 @@
   "devDependencies": {
     "@commitlint/cli": "^21.2.3",
     "@commitlint/config-conventional": "^21.2.3",
+    "@commitlint/types": "^21.2.3",
     "@eslint/compat": "^1.2.9",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.27.0",

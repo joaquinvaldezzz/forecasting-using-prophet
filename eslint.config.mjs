@@ -90,6 +90,9 @@ const prettierConfig = defineConfig([
 export default defineConfig([
   // Ignore files and folders listed in .gitignore
   includeIgnoreFile(gitignorePath),
+  {
+    ignores: ["src/components/ui/**", "src/next.config.mjs", ".next/**"],
+  },
   // JavaScript config
   ...jsConfig,
   // Next.js config
