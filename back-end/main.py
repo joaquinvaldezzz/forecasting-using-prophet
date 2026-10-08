@@ -9,19 +9,28 @@ CORS(app)
 
 
 # Mock data for demonstration - replace it with an actual data source
-def generate_mock_data():
+def generate_mock_data(seed: int = 42) -> pd.DataFrame:
     """
-    Generate mock data for demonstration purposes.
+    Generate deterministic mock food price data for demonstration purposes.
     """
+    rng = np.random.default_rng(seed)
     dates = pd.date_range(start='2018-01-01', end='2025-12-31', freq='ME')
+    n = len(dates)
     data = {
         'ds': dates,
-        'rice': np.random.normal(40, 5, len(dates)).cumsum() + 100,
-        'vegetables': np.random.normal(30, 4, len(dates)).cumsum() + 80,
-        'meat': np.random.normal(250, 20, len(dates)).cumsum() + 1000
+        'rice': rng.normal(0.5, 1.2, n).cumsum() + 45.0,
+        'vegetables': rng.normal(0.4, 1.5, n).cumsum() + 35.0,
+        'meat': rng.normal(1.2, 3.0, n).cumsum() + 280.0
     }
-    return pd.DataFrame(data)
+    df = pd.DataFrame(data)
+    # Ensure prices remain positive and realistic
+    for col in ['rice', 'vegetables', 'meat']:
+        df[col] = df[col].clip(lower=10.0)
+    return df
 
+
+# Cached dataset shared across all endpoints
+DATASET = generate_mock_data(42)
 
 # Initialize models for each commodity
 models = {}
@@ -32,7 +41,7 @@ def train_models():
     """
     Train models for each commodity.
     """
-    df = generate_mock_data()
+    df = DATASET.copy()
     for commodity in commodities:
         model = Prophet(
             yearly_seasonality=True,
@@ -62,17 +71,18 @@ def get_forecast():
     """
     Get forecast data for given commodities. If no commodities are specified, returns all.
     """
-    requested_commodities = request.args.get('commodities', '').split(',')
-    if not requested_commodities[0]:  # If empty string after split
+    raw_commodities = request.args.get('commodities', '').strip()
+    if not raw_commodities:
         requested_commodities = commodities
     else:
+        requested_commodities = [c.strip() for c in raw_commodities.split(',') if c.strip()]
         # Validate all requested commodities
         invalid_commodities = [c for c in requested_commodities if c not in commodities]
         if invalid_commodities:
             return jsonify({'error': f'Invalid commodities: {", ".join(invalid_commodities)}'}), 400
 
     # Get historical data
-    df = generate_mock_data()
+    df = DATASET.copy()
     result = {}
 
     for commodity in requested_commodities:
@@ -115,7 +125,7 @@ def get_insights():
     """
     Get insights for all commodities.
     """
-    df = generate_mock_data()
+    df = DATASET.copy()
     insights = []
 
     for commodity in commodities:
@@ -144,7 +154,7 @@ def get_price_trends(year):
         if year < 2018 or year > 2025:
             return jsonify({'error': 'Year out of range'}), 400
 
-        df = generate_mock_data()
+        df = DATASET.copy()
         year_data = df[df['ds'].dt.year == year].copy()
 
         # Format the data for the frontend
