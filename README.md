@@ -1,79 +1,152 @@
-# Food Price Forecasting using Python
+# Food Price Forecasting Web Application
 
-This project is a simple web app for forecasting food prices using the [Prophet](https://facebook.github.io/prophet) library. The front-end is built with [Next.js](https://nextjs.org), [Tailwind CSS](https://tailwindcss.com), and [shadcn/ui](https://ui.shadcn.com), while the back-end uses [Python](https://www.python.org).
+> Full-stack commodity price forecasting platform powered by Next.js 15 and Meta Prophet.
 
-This file is a guide for setting up the project locally. A full guide is available [here](SETUP.md).
+This application provides time-series price predictions and historical trend analysis for agricultural commodities (such as Rice, Corn, Wheat, and Soybeans). The system combines an interactive Next.js frontend with a Python Flask service running Meta's Prophet forecasting library.
 
-## Prerequisites
+For a beginner-friendly walkthrough with detailed installation screenshots and troubleshooting tips, refer to [SETUP.md](SETUP.md). For AI coding agents and contributor guardrails, see [AGENTS.md](AGENTS.md).
 
-- [Git](https://git-scm.com/downloads) — A version control system for tracking changes in your codebase.
-- [Node.js (LTS)](https://nodejs.org/en) — A JavaScript runtime for running code outside the browser.
-- [pnpm](https://pnpm.io/installation#using-npm) — A fast, disk-efficient package manager for Node.js.
-- [Python (3.13.2)](https://www.python.org/downloads/release/python-3132) — Used for the backend to train the model and make predictions.
-- [Visual Studio Code](https://code.visualstudio.com/download) — A code editor for writing and editing code, or use any editor you prefer.
+---
 
-## Local development setup
+## Key Features
 
-### Front-end installation
+- **Time-Series Forecasting**: Automated commodity price forecasts with trend and seasonality decomposition using Meta Prophet.
+- **Interactive Visualizations**: Multi-commodity selection, historical data overlays, and custom year filtering built with Recharts.
+- **Client-Side Data Export**: Export forecast datasets and visual charts directly to CSV, PNG, or PDF formats using on-demand dynamic imports.
+- **Resilient Data Layer**: Server-side data fetching with graceful fallback to deterministic mock data and timeout safeguards.
+- **Automated Verification**: End-to-end test coverage across frontend (Vitest) and backend (Pytest), integrated into GitHub Actions CI.
 
-1. [Download](https://github.com/joaquinvaldezzz/forecasting-using-prophet/archive/refs/heads/main.zip) or clone the repository:
+---
 
+## Tech Stack
+
+- **Frontend**: [Next.js 15](https://nextjs.org/) (App Router, Turbopack), [React 19](https://react.dev/), [TypeScript 5.9](https://www.typescriptlang.org/), [Tailwind CSS v4](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/) (Radix UI primitives), [Recharts](https://recharts.org/), [TanStack Query](https://tanstack.com/query/latest), [Lucide React](https://lucide.dev/), [Vitest](https://vitest.dev/).
+- **Backend**: Python 3.12+, [Flask](https://flask.palletsprojects.com/), [Prophet](https://facebook.github.io/prophet/), [CmdStanPy](https://cmdstanpy.readthedocs.io/), [Pandas](https://pandas.pydata.org/), [NumPy](https://numpy.org/), [Pytest](https://pytest.org/).
+- **Tooling & CI**: [pnpm](https://pnpm.io/), [Prettier](https://prettier.io/), [ESLint 9](https://eslint.org/), [Husky](https://typicode.github.io/husky/), [Commitlint](https://commitlint.js.org/), [GitHub Actions](https://github.com/features/actions).
+
+---
+
+## Project Structure
+
+```text
+forecasting-using-prophet/
+├── .github/workflows/   # CI/CD workflows (GitHub Actions)
+├── back-end/            # Flask API & Prophet forecasting service
+│   ├── main.py          # API endpoints & forecasting logic
+│   ├── requirements.txt # Python dependencies
+│   └── test_main.py     # Backend Pytest test suite
+├── plans/               # Structured implementation & advisory plans
+├── public/              # Static assets
+├── src/
+│   ├── app/             # Next.js 15 App Router pages & layouts
+│   ├── components/      # UI, layout, dashboard & forecast components
+│   ├── hooks/           # Custom React hooks
+│   └── lib/             # API client, export utils, and test suites
+├── SETUP.md             # Step-by-step setup guide for beginners
+├── AGENTS.md            # Agent and contributor instructions
+└── README.md            # Project documentation
+```
+
+---
+
+## Prerequisites & Configuration
+
+### Prerequisites
+
+- [Git](https://git-scm.com/downloads)
+- [Node.js (LTS)](https://nodejs.org/en) (v20+)
+- [pnpm](https://pnpm.io/installation) (v9+)
+- [Python](https://www.python.org/downloads/) (v3.12 or v3.13)
+
+### Environment Configuration
+
+The frontend connects to the Flask backend via the `API_BASE_URL` environment variable.
+
+1. Copy the sample environment file:
    ```bash
-   git clone https://github.com/joaquinvaldezzz/forecasting-using-prophet.git
+   cp .env.example .env.local
+   ```
+2. Configure variables as needed:
+   ```bash
+   # URL for the Python Flask backend (default: http://127.0.0.1:5000)
+   API_BASE_URL=http://127.0.0.1:5000
    ```
 
-2. Navigate to the project directory:
+---
 
-   ```bash
-   cd forecasting-using-prophet
-   ```
+## Quickstart
 
-3. Install front-end dependencies:
+### 1. Start the Backend Service
 
-   ```bash
-   pnpm install
-   ```
+In a new terminal window:
 
-4. Start the development server:
+```bash
+cd back-end
 
-   ```bash
-   pnpm run dev
-   ```
+# Create virtual environment
+python3 -m venv .venv
 
-5. Open your browser and go to `http://localhost:3000` to view the app.
+# Activate virtual environment
+# On macOS / Linux:
+source .venv/bin/activate
+# On Windows (cmd/PowerShell):
+# .venv\Scripts\activate
 
-For more details, check out the [Next.js documentation](https://nextjs.org/docs).
+# Install dependencies
+pip3 install -r requirements.txt
 
-### Back-end installation
+# Start Flask server
+python3 main.py
+```
 
-1. Go to the back-end directory:
+The backend server runs at `http://127.0.0.1:5000`.
 
-   ```bash
-   cd back-end
-   ```
+### 2. Start the Frontend Application
 
-2. Activate the virtual environment:
+In a separate terminal window:
 
-   ```bash
-   source .venv\Scripts\activate
-   ```
+```bash
+# Install dependencies
+pnpm install
 
-   If you're on Mac, use:
+# Start development server
+pnpm dev
+```
 
-   ```bash
-   source .venv/bin/activate
-   ```
+Open `http://localhost:3000` in your browser.
 
-3. Install Python dependencies:
+---
 
-   ```bash
-   pip3 install -r requirements.txt
-   ```
+## Scripts & Verification
 
-4. Start the server:
+| Command                        | Description                                            |
+| ------------------------------ | ------------------------------------------------------ |
+| `pnpm dev`                     | Start Next.js development server with Turbopack        |
+| `pnpm build`                   | Create production build                                |
+| `pnpm start`                   | Start Next.js production server                        |
+| `pnpm typecheck`               | Run TypeScript compiler type checking (`tsc --noEmit`) |
+| `pnpm test`                    | Run frontend unit and component tests with Vitest      |
+| `pnpm lint`                    | Run ESLint checks                                      |
+| `pnpm lint:fix`                | Fix autofixable ESLint errors                          |
+| `pnpm format`                  | Format repository files using Prettier                 |
+| `pytest back-end/test_main.py` | Run backend API test suite                             |
 
-   ```bash
-   python3 main.py
-   ```
+---
 
-For more details, see the [Prophet documentation](https://facebook.github.io/prophet/docs/quick_start.html).
+## Testing & Continuous Integration
+
+This project uses automated verification gates:
+
+- **Frontend Tests**: Executed via Vitest (`pnpm test`), covering utility functions, API clients, and React components.
+- **Backend Tests**: Executed via Pytest (`pytest back-end/test_main.py`), covering Prophet forecasting endpoints, data formatting, and fallback logic.
+- **Continuous Integration**: GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push and pull request, validating typechecking, frontend tests, and backend tests.
+
+---
+
+## Contributing & Commit Standards
+
+We enforce Conventional Commits using Husky and Commitlint.
+
+- Format: `<type>(<optional scope>): <subject>` (e.g., `feat: add price confidence interval chart`)
+- Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
+- **Constraint**: The commit header subject line must be 50 characters or fewer.
