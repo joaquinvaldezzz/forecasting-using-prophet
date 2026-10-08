@@ -13,13 +13,13 @@ import {
 } from "@/components/ui/card";
 
 interface InsightsData {
-  insights: Array<{
+  insights: {
     commodity: string;
     current_price: number;
     average_price: number;
     price_change: number;
     trend: string;
-  }>;
+  }[];
 }
 
 /**
@@ -48,11 +48,16 @@ export function SectionCards({ insights }: InsightsData) {
               </CardAction>
             </CardHeader>
             <CardFooter className="flex-col items-start gap-1.5 text-sm">
-              <div className="line-clamp-1 flex gap-2 font-medium">
-                {insight.trend} <IconTrendingUp className="size-4" />
+              <div className="line-clamp-1 flex items-center gap-2 font-medium capitalize">
+                {insight.trend}{" "}
+                {insight.trend === "up" ? (
+                  <IconTrendingUp className="size-4 text-destructive-foreground" />
+                ) : (
+                  <IconTrendingDown className="size-4 text-chart-6" />
+                )}
               </div>
               <div className="text-muted-foreground">
-                {insight.price_change}% change in the last 12 months
+                {Math.abs(insight.price_change)}% change in the last 12 months
               </div>
             </CardFooter>
           </Card>
