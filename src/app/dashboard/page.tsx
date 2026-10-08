@@ -44,11 +44,11 @@ export default async function Page() {
       <SiteHeader title="Dashboard" />
       <div className="flex flex-1 flex-col">
         <div className="@container/main flex flex-1 flex-col gap-2">
-          {!hasData && (
+          {!hasData ? (
             <div className="mx-4 mt-4 rounded-lg border border-dashed p-4 text-center text-sm text-muted-foreground lg:mx-6">
               Unable to load live dashboard data. Displaying offline view.
             </div>
-          )}
+          ) : null}
           <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
             <SectionCards insights={insights} />
             <div className="px-4 lg:px-6">

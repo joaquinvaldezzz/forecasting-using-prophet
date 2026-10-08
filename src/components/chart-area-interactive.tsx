@@ -1,20 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 
 import type { ChartConfig } from "@/components/ui/chart";
 import { exportChartToCSV, exportChartToPDF, exportChartToPNG } from "@/lib/chart-export";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 const chartConfig = {
@@ -52,31 +45,24 @@ interface ChartAreaInteractiveProps {
  */
 export function ChartAreaInteractive({ title, data }: ChartAreaInteractiveProps) {
   const isMobile = useIsMobile();
-  const [timeRange, setTimeRange] = useState("90d");
   const chartRef = useRef<HTMLDivElement>(null);
+  const timeRange = isMobile ? "7d" : "90d";
 
-  useEffect(() => {
-    if (isMobile) {
-      setTimeRange("7d");
+  const filteredData = useMemo(() => {
+    if (data.length === 0) {
+      return [];
     }
-  }, [isMobile]);
 
-  const filteredData =
-    data.length > 0
-      ? data.filter((item) => {
-          const date = new Date(item.ds);
-          const referenceDate = new Date("2025-05-31");
-          let daysToSubtract = 90;
-          if (timeRange === "30d") {
-            daysToSubtract = 30;
-          } else if (timeRange === "7d") {
-            daysToSubtract = 7;
-          }
-          const startDate = new Date(referenceDate);
-          startDate.setDate(startDate.getDate() - daysToSubtract);
-          return date >= startDate;
-        })
-      : [];
+    const referenceDate = new Date("2025-05-31");
+    const daysToSubtract = timeRange === "7d" ? 7 : 90;
+    const startDate = new Date(referenceDate);
+    startDate.setDate(startDate.getDate() - daysToSubtract);
+
+    return data.filter((item) => {
+      const date = new Date(item.ds);
+      return date >= startDate;
+    });
+  }, [data, timeRange]);
 
   const handleExport = async (format: "csv" | "png" | "pdf") => {
     if (chartRef.current == null || filteredData.length === 0) return;
@@ -92,6 +78,8 @@ export function ChartAreaInteractive({ title, data }: ChartAreaInteractiveProps)
         break;
       case "pdf":
         await exportChartToPDF(chartRef.current, `${filename}.pdf`);
+        break;
+      default:
         break;
     }
   };
@@ -111,7 +99,7 @@ export function ChartAreaInteractive({ title, data }: ChartAreaInteractiveProps)
               size="sm"
               variant="outline"
               onClick={() => {
-                void handleExport("csv");
+                handleExport("csv");
               }}
             >
               Export CSV
@@ -121,7 +109,7 @@ export function ChartAreaInteractive({ title, data }: ChartAreaInteractiveProps)
               size="sm"
               variant="outline"
               onClick={() => {
-                void handleExport("png");
+                handleExport("png");
               }}
             >
               Export PNG
@@ -131,7 +119,7 @@ export function ChartAreaInteractive({ title, data }: ChartAreaInteractiveProps)
               size="sm"
               variant="outline"
               onClick={() => {
-                void handleExport("pdf");
+                handleExport("pdf");
               }}
             >
               Export PDF

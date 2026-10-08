@@ -1,6 +1,3 @@
-import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";
-
 /**
  * Safely exports an array of objects to a downloadable CSV file.
  *
@@ -56,6 +53,7 @@ export const exportChartToPNG = async (
   filename = "chart.png",
 ): Promise<void> => {
   try {
+    const html2canvas = (await import("html2canvas")).default;
     const canvas = await html2canvas(chartElement, {
       scale: 2, // Higher scale for better quality
       useCORS: true,
@@ -65,7 +63,9 @@ export const exportChartToPNG = async (
     const link = document.createElement("a");
     link.href = canvas.toDataURL("image/png");
     link.download = filename;
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error("Error exporting chart to PNG:", error);
@@ -83,6 +83,9 @@ export const exportChartToPDF = async (
   filename = "chart.pdf",
 ): Promise<void> => {
   try {
+    const html2canvas = (await import("html2canvas")).default;
+    const { jsPDF } = await import("jspdf");
+
     const canvas = await html2canvas(chartElement, {
       scale: 2,
       useCORS: true,

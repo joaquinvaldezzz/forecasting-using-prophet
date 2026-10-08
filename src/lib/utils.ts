@@ -1,10 +1,16 @@
 export { cn } from "cn";
 
-export function formatAsCurrency(int: number) {
-  const PHP = new Intl.NumberFormat("en-PH", {
-    style: "currency",
-    currency: "PHP",
-  });
+const phpCurrencyFormatter = new Intl.NumberFormat("en-PH", {
+  style: "currency",
+  currency: "PHP",
+});
 
-  return PHP.format(int);
+/**
+ * Formats a given number as a currency string in Philippine Peso (PHP).
+ *
+ * @param int The number to format as currency.
+ * @returns A string representing the formatted currency.
+ */
+export function formatAsCurrency(int: number): string {
+  return phpCurrencyFormatter.format(int);
 }
