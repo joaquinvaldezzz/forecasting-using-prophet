@@ -7,7 +7,7 @@
 This repository is a full-stack commodity price forecasting application. It consists of:
 
 - **Frontend (`src/`)**: Next.js 15 (App Router, Turbopack) with React 19, TypeScript 5.9, Tailwind CSS v4, shadcn/ui (Radix UI primitives), Recharts, and TanStack Query.
-- **Backend (`back-end/`)**: Python Flask microservice utilizing Meta's Prophet library and CmdStanPy for time-series forecasting and trend decomposition.
+- **Backend (`back-end/`)**: Python FastAPI microservice utilizing Meta's Prophet library and CmdStanPy for time-series forecasting and trend decomposition.
 - **Documentation & Plans (`plans/`, `SETUP.md`, `README.md`)**: Structured roadmap, architecture documentation, and developer setup instructions.
 
 ---
@@ -16,15 +16,15 @@ This repository is a full-stack commodity price forecasting application. It cons
 
 Always verify changes using the relevant commands before reporting completion.
 
-| Gate / Action  | Command                        | Success Criteria                         |
-| -------------- | ------------------------------ | ---------------------------------------- |
-| Typecheck      | `pnpm typecheck`               | Exit code 0, no TypeScript diagnostics   |
-| Frontend Tests | `pnpm test`                    | Exit code 0, all Vitest test suites pass |
-| Backend Tests  | `pytest back-end/test_main.py` | Exit code 0, all Pytest test cases pass  |
-| Linting        | `pnpm lint`                    | Exit code 0, no ESLint errors            |
-| Formatting     | `pnpm format`                  | Exit code 0, all files formatted         |
-| Dev Server     | `pnpm dev`                     | Starts Next.js dev server on port 3000   |
-| Backend Server | `python3 back-end/main.py`     | Starts Flask server on port 5000         |
+| Gate / Action  | Command                                           | Success Criteria                             |
+| -------------- | ------------------------------------------------- | -------------------------------------------- |
+| Typecheck      | `pnpm typecheck`                                  | Exit code 0, no TypeScript diagnostics       |
+| Frontend Tests | `pnpm test`                                       | Exit code 0, all Vitest test suites pass     |
+| Backend Tests  | `pytest back-end/test_main.py`                    | Exit code 0, all Pytest test cases pass      |
+| Linting        | `pnpm lint`                                       | Exit code 0, no ESLint errors                |
+| Formatting     | `pnpm format`                                     | Exit code 0, all files formatted             |
+| Dev Server     | `pnpm dev`                                        | Starts Next.js dev server on port 3000       |
+| Backend Server | `uvicorn main:app --app-dir back-end --port 5000` | Starts FastAPI / Uvicorn server on port 5000 |
 
 ---
 
@@ -52,7 +52,7 @@ Always verify changes using the relevant commands before reporting completion.
 
 ### Backend & Python
 
-- **Flask Endpoints**: Place API endpoints in `back-end/main.py`.
+- **FastAPI Endpoints**: Place API endpoints and Pydantic schemas in `back-end/main.py`.
 - **Deterministic Seeding**: When generating synthetic data or simulation series, always use fixed seeds (`numpy.random.seed`, `random.seed`) to ensure idempotent results across test runs.
 - **Pytest Suite**: Maintain test cases in `back-end/test_main.py` for all endpoints and forecasting transformations.
 

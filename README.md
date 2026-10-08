@@ -2,7 +2,7 @@
 
 > Full-stack commodity price forecasting platform powered by Next.js 15 and Meta Prophet.
 
-This application provides time-series price predictions and historical trend analysis for agricultural commodities (such as Rice, Corn, Wheat, and Soybeans). The system combines an interactive Next.js frontend with a Python Flask service running Meta's Prophet forecasting library.
+This application provides time-series price predictions and historical trend analysis for agricultural commodities (such as Rice, Corn, Wheat, and Soybeans). The system combines an interactive Next.js frontend with a Python FastAPI service running Meta's Prophet forecasting library.
 
 For a beginner-friendly walkthrough with detailed installation screenshots and troubleshooting tips, refer to [SETUP.md](SETUP.md). For AI coding agents and contributor guardrails, see [AGENTS.md](AGENTS.md).
 
@@ -21,7 +21,7 @@ For a beginner-friendly walkthrough with detailed installation screenshots and t
 ## Tech Stack
 
 - **Frontend**: [Next.js 15](https://nextjs.org/) (App Router, Turbopack), [React 19](https://react.dev/), [TypeScript 5.9](https://www.typescriptlang.org/), [Tailwind CSS v4](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/) (Radix UI primitives), [Recharts](https://recharts.org/), [TanStack Query](https://tanstack.com/query/latest), [Lucide React](https://lucide.dev/), [Vitest](https://vitest.dev/).
-- **Backend**: Python 3.12+, [Flask](https://flask.palletsprojects.com/), [Prophet](https://facebook.github.io/prophet/), [CmdStanPy](https://cmdstanpy.readthedocs.io/), [Pandas](https://pandas.pydata.org/), [NumPy](https://numpy.org/), [Pytest](https://pytest.org/).
+- **Backend**: Python 3.12+, [FastAPI](https://fastapi.tiangolo.com/), [Uvicorn](https://www.uvicorn.org/), [Prophet](https://facebook.github.io/prophet/), [CmdStanPy](https://cmdstanpy.readthedocs.io/), [Pandas](https://pandas.pydata.org/), [NumPy](https://numpy.org/), [Pytest](https://pytest.org/).
 - **Tooling & CI**: [pnpm](https://pnpm.io/), [Prettier](https://prettier.io/), [ESLint 9](https://eslint.org/), [Husky](https://typicode.github.io/husky/), [Commitlint](https://commitlint.js.org/), [GitHub Actions](https://github.com/features/actions).
 
 ---
@@ -31,7 +31,7 @@ For a beginner-friendly walkthrough with detailed installation screenshots and t
 ```text
 forecasting-using-prophet/
 ├── .github/workflows/   # CI/CD workflows (GitHub Actions)
-├── back-end/            # Flask API & Prophet forecasting service
+├── back-end/            # FastAPI API & Prophet forecasting service
 │   ├── main.py          # API endpoints & forecasting logic
 │   ├── requirements.txt # Python dependencies
 │   └── test_main.py     # Backend Pytest test suite
@@ -60,7 +60,7 @@ forecasting-using-prophet/
 
 ### Environment Configuration
 
-The frontend connects to the Flask backend via the `API_BASE_URL` environment variable.
+The frontend connects to the FastAPI backend via the `API_BASE_URL` environment variable.
 
 1. Copy the sample environment file:
    ```bash
@@ -68,7 +68,7 @@ The frontend connects to the Flask backend via the `API_BASE_URL` environment va
    ```
 2. Configure variables as needed:
    ```bash
-   # URL for the Python Flask backend (default: http://127.0.0.1:5000)
+   # URL for the Python FastAPI backend (default: http://127.0.0.1:5000)
    API_BASE_URL=http://127.0.0.1:5000
    ```
 
@@ -95,8 +95,9 @@ source .venv/bin/activate
 # Install dependencies
 pip3 install -r requirements.txt
 
-# Start Flask server
-python3 main.py
+# Start FastAPI server
+uvicorn main:app --port 5000
+# or: python3 main.py
 ```
 
 The backend server runs at `http://127.0.0.1:5000`.
