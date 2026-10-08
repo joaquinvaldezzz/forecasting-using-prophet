@@ -34,12 +34,12 @@ const chartConfig = {
 
 interface ChartAreaInteractiveProps {
   title: string;
-  data: Array<{
+  data: {
     ds: string;
     price: number;
     lower_bound: number;
     upper_bound: number;
-  }>;
+  }[];
 }
 
 /**

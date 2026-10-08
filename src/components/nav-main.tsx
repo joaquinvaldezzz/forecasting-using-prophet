@@ -23,11 +23,11 @@ import {
 export function NavMain({
   items,
 }: {
-  items: Array<{
+  items: {
     title: string;
     url: string;
     icon?: Icon;
-  }>;
+  }[];
 }) {
   const pathname = usePathname();
   const { setOpenMobile } = useSidebar();

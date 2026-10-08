@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState } from "react";
+import { Fragment, useId, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { CartesianGrid, Line, LineChart, Rectangle, XAxis, YAxis } from "recharts";
 
@@ -55,7 +55,7 @@ interface CustomCursorProps {
   fill?: string;
   pointerEvents?: string;
   height?: number;
-  points?: Array<{ x: number; y: number }>;
+  points?: { x: number; y: number }[];
   className?: string;
 }
 
@@ -74,7 +74,7 @@ function CustomCursor(props: CustomCursorProps) {
 
   const { x, y } = points[0];
   return (
-    <>
+    <Fragment>
       <Rectangle
         className={className}
         width={24}
@@ -95,7 +95,7 @@ function CustomCursor(props: CustomCursorProps) {
         x={x - 1}
         y={y}
       />
-    </>
+    </Fragment>
   );
 }
 
@@ -125,7 +125,7 @@ export function ChartAreaInteractive({
 
   const { data: chartData, isLoading } = useQuery({
     queryKey: ["chartData", selectedYear],
-    queryFn: async () => await fetchData(selectedYear),
+    queryFn: async () => fetchData(selectedYear),
   });
 
   const getAverageValue = (key: string) => {
@@ -183,7 +183,7 @@ export function ChartAreaInteractive({
                   className="size-1.5 shrink-0 rounded-xs"
                   style={{ backgroundColor: color }}
                   aria-hidden="true"
-                ></div>
+                />
                 <div className="text-[13px]/3 text-muted-foreground/50">
                   {label} (₱{getAverageValue(key)}/kg)
                   {!isLoading && chartData != null && (
@@ -288,11 +288,9 @@ export function ChartAreaInteractive({
                     <CustomTooltipContent
                       valueFormatter={(value) => `₱${value}/kg`}
                       dataKeys={Object.keys(config)}
-                      colorMap={
-                        Object.fromEntries(
-                          Object.entries(config).map(([key, { color }]) => [key, color ?? ""]),
-                        ) as Record<string, string>
-                      }
+                      colorMap={Object.fromEntries(
+                        Object.entries(config).map(([key, { color }]) => [key, color ?? ""]),
+                      )}
                       labelMap={
                         Object.fromEntries(
                           Object.entries(config).map(([key, { label }]) => [key, label ?? ""]),

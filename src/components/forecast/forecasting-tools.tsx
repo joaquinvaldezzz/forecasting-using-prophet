@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { Fragment, useId, useState } from "react";
 import { CartesianGrid, Line, LineChart, Rectangle, XAxis, YAxis } from "recharts";
 
 import type { ChartConfig } from "@/components/ui/chart";
@@ -57,7 +57,7 @@ interface CustomCursorProps {
   fill?: string;
   pointerEvents?: string;
   height?: number;
-  points?: Array<{ x: number; y: number }>;
+  points?: { x: number; y: number }[];
   className?: string;
 }
 
@@ -76,7 +76,7 @@ function CustomCursor(props: CustomCursorProps) {
 
   const { x, y } = points[0];
   return (
-    <>
+    <Fragment>
       <Rectangle
         className={className}
         width={24}
@@ -97,7 +97,7 @@ function CustomCursor(props: CustomCursorProps) {
         x={x - 1}
         y={y}
       />
-    </>
+    </Fragment>
   );
 }
 
@@ -170,11 +170,11 @@ export function ForecastingTools() {
             </div>
             <div className="flex flex-wrap items-center gap-4">
               <div className="flex items-center gap-2">
-                <div className="size-1.5 shrink-0 rounded-xs bg-chart-1" aria-hidden="true"></div>
+                <div className="size-1.5 shrink-0 rounded-xs bg-chart-1" aria-hidden="true" />
                 <div className="text-[13px]/3 text-muted-foreground/50">Historical</div>
               </div>
               <div className="flex items-center gap-2">
-                <div className="size-1.5 shrink-0 rounded-xs bg-chart-3" aria-hidden="true"></div>
+                <div className="size-1.5 shrink-0 rounded-xs bg-chart-3" aria-hidden="true" />
                 <div className="text-[13px]/3 text-muted-foreground/50">Forecast</div>
               </div>
             </div>

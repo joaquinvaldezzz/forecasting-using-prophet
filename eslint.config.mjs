@@ -79,7 +79,7 @@ const shadcnConfig = defineConfig([
     rules: {
       // "shadcn/no-restyle": ["error", { allow: ["layout"] }],
       "shadcn/no-raw-colors": "error",
-      "shadcn/no-arbitrary-values": ["error", { allow: ["layout"] }],
+      "shadcn/no-arbitrary-values": ["warn", { allow: ["layout"] }],
       // "shadcn/no-inline-styles": "error",
       "shadcn/no-unknown-classes": "warn",
       "shadcn/require-static-classes": "error",

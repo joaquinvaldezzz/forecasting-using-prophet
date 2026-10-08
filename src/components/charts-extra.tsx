@@ -1,6 +1,17 @@
-import { TooltipProps } from "recharts";
+import type { TooltipValueType } from "recharts";
 
-interface CustomTooltipContentProps extends TooltipProps<number, string> {
+type TooltipNameType = number | string;
+
+interface PayloadItem {
+  dataKey?: string | number;
+  value?: number;
+  [key: string]: unknown;
+}
+
+interface CustomTooltipContentProps {
+  active?: boolean;
+  payload?: PayloadItem[];
+  label?: string | number;
   colorMap?: Record<string, string>;
   labelMap?: Record<string, string>;
   // Optional array to define display order
@@ -18,7 +29,7 @@ export function CustomTooltipContent({
   dataKeys, // If provided, will be used to order the items
   valueFormatter = (value) => `$${value.toLocaleString()}`,
 }: CustomTooltipContentProps) {
-  if (!active || !payload || !payload.length) {
+  if (!active || !payload?.length) {
     return null;
   }
 

@@ -26,12 +26,12 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 interface ChartAreaInteractiveProps {
-  data: Array<{
+  data: {
     month: string;
     rice: number;
     vegetables: number;
     meat: number;
-  }>;
+  }[];
 }
 
 /**
