@@ -27,8 +27,6 @@ const jsConfig = defineConfig([
       // Disable Import X order rules to avoid conflicts with `@ianvs/prettier-plugin-sort-imports`
       "import-x/order": "off",
       "import-x/prefer-default-export": "off",
-      "no-void": "off",
-      "default-case": "off",
     },
   },
 ]);
@@ -51,7 +49,6 @@ const nextConfig = defineConfig([
       "react/function-component-definition": ["error", { namedComponents: "function-declaration" }],
       "react/jsx-sort-props": "off",
       "react/require-default-props": ["error", { functions: "defaultArguments" }],
-      "react/hook-use-state": "off",
     },
   },
 ]);
@@ -68,8 +65,6 @@ const typescriptConfig = defineConfig([
   {
     rules: {
       "@typescript-eslint/explicit-module-boundary-types": "off",
-      "@typescript-eslint/array-type": "off",
-      "import-x/consistent-type-specifier-style": "off",
     },
   },
 ]);
@@ -95,9 +90,6 @@ const prettierConfig = defineConfig([
 export default defineConfig([
   // Ignore files and folders listed in .gitignore
   includeIgnoreFile(gitignorePath),
-  {
-    ignores: ["src/components/ui/**", "src/next.config.mjs", ".next/**"],
-  },
   // JavaScript config
   ...jsConfig,
   // Next.js config
