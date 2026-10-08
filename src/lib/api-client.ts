@@ -1,5 +1,3 @@
-const API_BASE_URL = process.env.API_BASE_URL ?? "http://127.0.0.1:5000";
-
 /**
  * Safely fetches data from the API with fallback handling, timeout safeguards, and Next.js
  * revalidation cache settings.
@@ -10,7 +8,12 @@ const API_BASE_URL = process.env.API_BASE_URL ?? "http://127.0.0.1:5000";
  */
 export async function fetchWithFallback<T>(endpoint: string, fallback: T): Promise<T> {
   try {
-    const res = await fetch(`${API_BASE_URL}${endpoint}`, {
+    const baseUrl = process.env.BACKEND_URL ?? process.env.API_BASE_URL ?? "http://127.0.0.1:5000";
+    const relativePath = endpoint.startsWith("/") ? endpoint.slice(1) : endpoint;
+    const baseWithTrailingSlash = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+    const targetUrl = new URL(relativePath, baseWithTrailingSlash);
+
+    const res = await fetch(targetUrl, {
       next: { revalidate: 60 },
       signal: AbortSignal.timeout(5000),
     });
