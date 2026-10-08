@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import type { Metadata } from "next";
 
+import { fetchWithFallback } from "@/lib/api-client";
 import { SectionCards } from "@/components/section-cards";
 import { SiteHeader } from "@/components/site-header";
 
@@ -31,18 +32,23 @@ interface InsightsData {
  * @returns The rendered page.
  */
 export default async function Page() {
-  const insights = await fetch("http://127.0.0.1:5000/api/insights").then(
-    async (res) => (await res.json()) as InsightsData[],
-  );
-  const data = await fetch("http://127.0.0.1:5000/api/price-trends/2023").then(
-    async (res) => (await res.json()) as PriceTrendsData[],
-  );
+  const [insights, data] = await Promise.all([
+    fetchWithFallback<InsightsData[]>("/api/insights", []),
+    fetchWithFallback<PriceTrendsData[]>("/api/price-trends/2023", []),
+  ]);
+
+  const hasData = insights.length > 0 || data.length > 0;
 
   return (
     <Fragment>
       <SiteHeader title="Dashboard" />
       <div className="flex flex-1 flex-col">
         <div className="@container/main flex flex-1 flex-col gap-2">
+          {!hasData && (
+            <div className="mx-4 mt-4 rounded-lg border border-dashed p-4 text-center text-sm text-muted-foreground lg:mx-6">
+              Unable to load live dashboard data. Displaying offline view.
+            </div>
+          )}
           <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
             <SectionCards insights={insights} />
             <div className="px-4 lg:px-6">
